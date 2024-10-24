@@ -1,94 +1,83 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-export default function Registro() {
+const Cadastro = ({ navigation }) => {
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [email, setEmail] = useState('');
+  const [dataNascimento, setNascimento] = useState('');
   const [senha, setSenha] = useState('');
-  const [dataNascimento, setDataNascimento] = useState('');
+
+  const handleCadastro = () => {
+    // Lógica para cadastro
+    console.log('Cadastro realizado:', { nome, sobrenome, email, dataNascimento, senha });
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registre-se</Text>
-      
+      <Text style={styles.title}>Cadastro</Text>
       <TextInput
-        style={styles.input}
         placeholder="Nome"
         value={nome}
         onChangeText={setNome}
-      />
-      
-      <TextInput
         style={styles.input}
+      />
+      <TextInput
         placeholder="Sobrenome"
         value={sobrenome}
         onChangeText={setSobrenome}
-      />
-
-      <TextInput
         style={styles.input}
+      />
+      <TextInput
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-
-      <TextInput
         style={styles.input}
+      />
+      <TextInput
+        placeholder="dataNascimento"
+        value={nome}
+        onChangeText={setNascimento}
+        style={styles.input}
+      />
+      <TextInput
         placeholder="Senha"
         value={senha}
-        onChangeText={setSenha}
         secureTextEntry
-      />
-
-      <TextInput
+        onChangeText={setSenha}
         style={styles.input}
-        placeholder="Data de Nascimento"
-        value={dataNascimento}
-        onChangeText={setDataNascimento}
       />
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
+      <Button title="Cadastrar" onPress={handleCadastro} />
+      <Text style={styles.loginText} onPress={() => navigation.navigate('Login')}>
+        Já tem cadastro? Faça login.
+      </Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     padding: 20,
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
-    fontWeight: 'bold',
   },
   input: {
-    width: '40%', 
-    height: 40,
-    borderColor: '#ccc',
     borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
     marginBottom: 10,
-    paddingHorizontal: 10,
     borderRadius: 5,
-    backgroundColor: '#fff',
   },
-  button: {
-    backgroundColor: 'black',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    alignItems: 'center',
-    width: '10%',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+  loginText: {
+    marginTop: 20,
+    color: 'blue',
+    textAlign: 'center',
   },
 });
+
+export default Cadastro;

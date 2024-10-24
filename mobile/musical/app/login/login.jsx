@@ -1,69 +1,54 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-export default function Login() {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+
+  const handleLogin = () => {
+    // Lógica para login
+    console.log('Login realizado:', { email, senha });
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      
       <TextInput
-        style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-
-      <TextInput
         style={styles.input}
+      />
+      <TextInput
         placeholder="Senha"
         value={senha}
-        onChangeText={setSenha}
         secureTextEntry
+        onChangeText={setSenha}
+        style={styles.input}
       />
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     padding: 20,
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
-    fontWeight: 'bold',
   },
   input: {
-    width: '80%',
-    height: 40,
-    borderColor: '#ccc',
     borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
     marginBottom: 10,
-    paddingHorizontal: 10,
     borderRadius: 5,
-  },
-  button: {
-    backgroundColor: '#4CAF50',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    alignItems: 'center',
-    width: '80%',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
+
+export default Login;
