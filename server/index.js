@@ -11,7 +11,7 @@ app.use(cors())
 
 app.post('/registro', async (req, res) => {
     const {nome, sobrenome, email, senha, dataNascimento} = req.body
-    
+    console.log(req.body)
     if (!nome || !sobrenome || !email || !senha || !dataNascimento){
         res.send('preenche tudo ai krai')
         return
