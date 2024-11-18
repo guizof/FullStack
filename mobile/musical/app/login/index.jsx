@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { Link } from 'expo-router';
+import { AppContext } from '../../scripts/AppContext';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
