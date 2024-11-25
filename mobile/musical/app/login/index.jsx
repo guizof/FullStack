@@ -1,34 +1,48 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { Link } from 'expo-router';
+import React, { useState, useEffect, useContext } from 'react'
+import { View, Text, StyleSheet, TextInput, Image, Pressable, Button } from 'react-native'
+import { Link } from 'expo-router'
 import { AppContext } from '../../scripts/AppContext';
+import { router } from 'expo-router'
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
 
-const entrarUsuário = async function (){
-  if (!email || !senha) {
-    console.log('Todos os campos devem ser preenchidos')
-    return
-}
-const resposta = await fetch('http://localhost:8000/login',{
-  method: 'POST',
-  headers: {
-  Accept: 'application/json',
-  'Content-type': 'application/json',
-},
-  body: JSON.stringify({email: email, senha: senha})
-})
+export default LoginScreen = () => {
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+  const [mensagem, setMensagem] = useState('')
+  const { user, setUser } = useContext(AppContext)
 
-if (!resposta) {
-console.log('erro')
-} else if (resposta.status == 200) {
-console.log('Usuário logado com sucesso')
-} else {
-console.log('ocorreu um erro')
-}
-}
+
+
+  const EntrarUsuario = async () => {
+    if (!email || !senha) {
+      setMensagem('Todos os campos devem ser preenchidos')
+      return;
+    }
+    try {
+      const response = await fetch('http://localhost:7000/autenticacao/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email, senha: senha })
+      });
+      data = await response.json()
+      if (response.status == 200) {
+        console.log(data.userInfo)
+        setMensagem('Signup successfully!');
+        setUser(data.userInfo)
+        router.push('/home')
+        return
+      } else if (response.status === 409) {
+        setMensagem('Email already exists');
+      } else {
+        setMensagem('An error occurred, try again');
+      }
+    } catch (error) {
+      setMensagem('Error during signup. Please try again.');
+  }
+};
 
   return (
     <View style={styles.container}>
@@ -56,7 +70,7 @@ console.log('ocorreu um erro')
       />
 
       <View style={styles.buttonContainer}>
-        <Button title="Login" color="black" onPress={entrarUsuário}/>
+        <Button title="Login" color="black" onPress={EntrarUsuario}/>
       </View>
 
       </View>
@@ -127,5 +141,3 @@ const styles = StyleSheet.create({
     width: '90%',
   },
 });
-
-export default LoginScreen;
